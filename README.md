@@ -75,7 +75,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
+[![Product Name Screen Shot][product-screenshot]](https://github.com/Tim-W-James/Pixel-Perfect-Lighting)
 Combines the Unity [2D Pixel Perfect Camera](https://docs.unity3d.com/Packages/com.unity.2d.pixel-perfect@1.0/manual/index.html) with [this 2D shadows technique](https://medium.com/@tidyui/fast-beautiful-2d-lighting-in-unity-47b76b10447c) and other [post processing effects](https://docs.google.com/document/d/1brkjiMgB8urmjMZFrbpasWn8Yp-qtIZmtJwBFIAfaxo/view?usp=sharing#heading=h.5v5whdw1py9q).
 
 ### Features
