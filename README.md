@@ -58,8 +58,8 @@
     <li>
       <a href="#usage">Usage</a>
       <ul>
-<!--         <li><a href="#prerequisites">Prerequisites</a></li> -->
-<!--        <li><a href="#installation">Installation</a></li> -->
+        <li><a href="#2d-pixel-perfect-rendering">2D Pixel Perfect Rendering</a></li>
+        <li><a href="#2d-shadows">2D Shadows</a></li>
 <!--         <li><a href="#example-usecases">Example Usecases</a></li> -->
       </ul>
     </li>
@@ -96,7 +96,48 @@ Combines the Unity [2D Pixel Perfect Camera](https://docs.unity3d.com/Packages/c
 <!-- USAGE -->
 ## Usage
 
-Clone the repo and use with Unity 2018.4.14f1. Repo contains a demo scene to showcase the rendering. Instructions on how the technique is used can be found [here](https://docs.google.com/document/d/1brkjiMgB8urmjMZFrbpasWn8Yp-qtIZmtJwBFIAfaxo/view?usp=sharing#heading=h.91d5o2vw6ai4).
+Clone the repo and use with Unity 2018.4.14f1. Repo contains a demo scene to showcase the rendering. 
+
+### 2D Pixel Perfect Rendering
+The main camera has a [2D Pixel Perfect Camera](https://docs.unity3d.com/Packages/com.unity.2d.pixel-perfect@1.0/manual/index.html) component. Adjust pixels per unit and reference resolution to match those of your pixel art.
+
+### 2D Shadows
+**Note**: this method of drawing shadows is no longer necessary for Unity 2019 and beyond. See Unity [documentation](https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@7.1/manual/2DShadows.html) for more details.
+
+I have used [this](https://medium.com/@tidyui/fast-beautiful-2d-lighting-in-unity-47b76b10447c) method which implements [this](https://github.com/prime31/SpriteLightKit) script to blend cameras together.
+
+Since we can’t render shadows in 2D, we need to create a copy of our scene with anything we want to cast shadows having 3D geometry. These objects are then given the 'Shadowcaster' layer. Using Unity 3D primitives such as cubes is the easiest way to approximate simple shadows, and these objects can be attached as children of their respective sprites. Use greater Z scales for geometry or adjust the Z position of lights to adjust the ‘height’ of lights/objects.
+
+_Example Scene without Shadows_:
+<br>
+<img src="images/image26.png" alt="img" width="800"/>
+
+_Geometry of Scene_:
+<br>
+<img src="images/image15.png" alt="img" width="800"/>
+
+**Note**: the fox and eagle are not currently drawing shadows.
+
+This is achieved with the use of two cameras. Our main camera renders all sprites and UI as usual, however our second camera, the 'ShadowCamera', only renders shadows.
+
+_Main camera_:
+<br>
+<img src="images/image26.png" alt="img" width="800"/>
+
+_Shadow Camera_:
+<br>
+<img src="images/image18.png" alt="img" width="800"/>
+
+Then these cameras are blended together to give the effect of shadows:
+<br>
+<img src="images/image19.png" alt="img" width="800"/>
+
+Belding is done by outputting the shadow camera to a texture, and then blending this texture with the main camera. This also allows sprites to be partially shadowed.
+
+The shadow camera is not pixel perfect. We cannot both upscale render textures and output the camera to a texture because this is not supported by the package. Instead, we use soft shadows, which is what most other pixel art games do. The difference between pixel perfect shadows and soft shadows is very subtle and only really visible during motion. A blend of pixel art and high resolution effects can look pleasing regardless. Additional post processing effects can be applied with the 
+
+
+Further details can be found [here](https://docs.google.com/document/d/1brkjiMgB8urmjMZFrbpasWn8Yp-qtIZmtJwBFIAfaxo/view?usp=sharing#heading=h.91d5o2vw6ai4).
 
 
 
